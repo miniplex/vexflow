@@ -12,14 +12,14 @@ Vex.Flow.Test.StaveNote.Start = function() {
   test("StaveLine", Vex.Flow.Test.StaveNote.staveLine);
   test("Width", Vex.Flow.Test.StaveNote.width);
   test("TickContext", Vex.Flow.Test.StaveNote.tickContext);
-  Vex.Flow.Test.runTest("StaveNote Draw", Vex.Flow.Test.StaveNote.draw);
-  Vex.Flow.Test.runRaphaelTest("StaveNote Draw (Raphael)",
+  Vex.Flow.Test.runRaphaelTest("StaveNote Draw", Vex.Flow.Test.StaveNote.draw);
+  Vex.Flow.Test.runJquerySVGTest("StaveNote Draw (JquerySVG)",
       Vex.Flow.Test.StaveNote.draw);
-  Vex.Flow.Test.runTest("Displacements", Vex.Flow.Test.StaveNote.displacements);
-  Vex.Flow.Test.runRaphaelTest("Displacements (Raphael)",
+  Vex.Flow.Test.runRaphaelTest("Displacements", Vex.Flow.Test.StaveNote.displacements);
+  Vex.Flow.Test.runJquerySVGTest("Displacements (JquerySVGRaphael)",
       Vex.Flow.Test.StaveNote.displacements);
-  Vex.Flow.Test.runTest("StaveNote Draw - Bass", Vex.Flow.Test.StaveNote.drawBass);
-  Vex.Flow.Test.runRaphaelTest("StaveNote Draw - Bass(Raphael)",
+  Vex.Flow.Test.runRaphaelTest("StaveNote Draw - Bass", Vex.Flow.Test.StaveNote.drawBass);
+  Vex.Flow.Test.runJquerySVGTest("StaveNote Draw - Bass(JquerySVGRaphael)",
       Vex.Flow.Test.StaveNote.drawBass);
 }
 

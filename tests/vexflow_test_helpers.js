@@ -33,6 +33,15 @@ Vex.Flow.Test.createTestRaphael = function(canvas_sel_name, test_name) {
   $(sel).append(test_div);
 }
 
+Vex.Flow.Test.createTestJquerySVG = function(canvas_sel_name, test_name) {
+  var sel = Vex.Flow.Test.createTestCanvas.sel;
+  var test_div = $('<div></div>').addClass("testcanvas");
+  test_div.append($('<div></div>').addClass("name").text(test_name));
+  test_div.append($('<div></div>').addClass("vex-tabdiv").
+      attr("id", canvas_sel_name));
+  $(sel).append(test_div);
+}
+
 Vex.Flow.Test.resizeCanvas = function(sel, width, height) {
   $("#" + sel).width(width);
   $("#" + sel).attr("width", width);
@@ -54,5 +63,14 @@ Vex.Flow.Test.runRaphaelTest = function(name, func, params) {
       test_canvas = Vex.Flow.Test.createTestRaphael(test_canvas_sel, name);
       func({ canvas_sel: test_canvas_sel, params: params },
         Vex.Flow.Renderer.getRaphaelContext);
+    });
+}
+
+Vex.Flow.Test.runJquerySVGTest = function(name, func, params) {
+  test(name, function() {
+      test_canvas_sel = "canvas_" + Vex.Flow.Test.genID();
+      test_canvas = Vex.Flow.Test.createTestJquerySVG(test_canvas_sel, name);
+      func({ canvas_sel: test_canvas_sel, params: params },
+        Vex.Flow.Renderer.getJquerySVGContext);
     });
 }

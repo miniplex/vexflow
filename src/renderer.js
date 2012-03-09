@@ -40,6 +40,12 @@ Vex.Flow.Renderer.getRaphaelContext = function(sel, width, height, background) {
       width, height, background);
 }
 
+Vex.Flow.Renderer.getJquerySVGContext = function(sel, width, height, background){
+  return Vex.Flow.Renderer.buildContext(sel,
+      Vex.Flow.Renderer.Backends.SVG,
+      width, height, background);
+}
+
 Vex.Flow.Renderer.bolsterCanvasContext = function(ctx) {
   ctx.clear = function() {
     // TODO: get real width and height of context.
@@ -86,6 +92,8 @@ Vex.Flow.Renderer.prototype.init = function(sel, backend) {
         this.element.getContext('2d'));
   } else if (this.backend == Vex.Flow.Renderer.Backends.RAPHAEL) {
     this.ctx = new Vex.Flow.RaphaelContext(this.element);
+  } else if (this.backend == Vex.Flow.Renderer.Backends.SVG) {
+    this.ctx = new Vex.Flow.JquerySVGContext(this.element);
   } else {
     throw new Vex.RERR("InvalidBackend",
       "No support for backend: " + this.backend);
