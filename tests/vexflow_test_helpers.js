@@ -51,9 +51,11 @@ Vex.Flow.Test.resizeCanvas = function(sel, width, height) {
 Vex.Flow.Test.runTest = function(name, func, params) {
   test(name, function() {
       test_canvas_sel = "canvas_" + Vex.Flow.Test.genID();
-      test_canvas = Vex.Flow.Test.createTestCanvas(test_canvas_sel, name);
+      //test_canvas = Vex.Flow.Test.createTestCanvas(test_canvas_sel, name);
+      test_canvas = Vex.Flow.Test.createTestJquerySVG(test_canvas_sel, name);
       func({ canvas_sel: test_canvas_sel, params: params },
-        Vex.Flow.Renderer.getCanvasContext);
+        //Vex.Flow.Renderer.getCanvasContext);
+		Vex.Flow.Renderer.getJquerySVGContext);
     });
 }
 
