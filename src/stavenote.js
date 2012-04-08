@@ -319,6 +319,11 @@ Vex.Flow.StaveNote.prototype.draw = function() {
       "Can't draw note without Y values.");
 
   var ctx = this.context;
+  var group = ctx.group();
+  if (group && group.node) {
+	group.node.setAttribute('class', this.keys);
+  }
+  
   var x = this.getAbsoluteX() + this.x_shift;
 
   var ys = this.ys;

@@ -61,6 +61,11 @@ Vex.Flow.Renderer.bolsterCanvasContext = function(ctx) {
     this.strokeStyle = style;
     return this;
   }
+
+  ctx.group = function() {
+    return {};
+  }
+
   return ctx;
 }
 

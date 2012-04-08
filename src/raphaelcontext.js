@@ -38,6 +38,15 @@ Vex.Flow.RaphaelContext.prototype.init = function(element) {
   };
 
   this.state_stack= [];
+  this.current_group = this.paper.group();
+  this.grouped = [this.current_group];
+}
+
+Vex.Flow.RaphaelContext.prototype.group = function() {
+   var group = this.paper.group();
+   this.current_group = group;
+   this.grouped.push(group);
+   return group;
 }
 
 Vex.Flow.RaphaelContext.prototype.setFont = function(family, size, weight) {
@@ -97,7 +106,10 @@ Vex.Flow.RaphaelContext.prototype.rect = function(x, y, width, height) {
   var r = this.paper.rect(x, y, width - 0.5, height - 0.5).
     attr(this.attributes).
     attr("fill", "none").
-    attr("stroke-width", this.lineWidth); return this;
+    attr("stroke-width", this.lineWidth); 
+  
+  this.current_group.push(r);
+  return this;
 }
 Vex.Flow.RaphaelContext.prototype.fillRect = function(x, y, width, height) {
   if (height < 0) {
@@ -107,6 +119,8 @@ Vex.Flow.RaphaelContext.prototype.fillRect = function(x, y, width, height) {
 
   var r = this.paper.rect(x, y, width - 0.5, height - 0.5).
     attr(this.attributes);
+
+  this.current_group.push(r);
   return this;
 }
 
@@ -118,6 +132,9 @@ Vex.Flow.RaphaelContext.prototype.clearRect = function(x, y, width, height) {
 
   var r = this.paper.rect(x, y, width - 0.5, height - 0.5).
     attr(this.background_attributes);
+
+  this.current_group.push(r);
+
   return this;
 }
 
@@ -251,17 +268,21 @@ Vex.Flow.RaphaelContext.prototype.arcHelper =
 
 
 Vex.Flow.RaphaelContext.prototype.fill = function() {
-  this.paper.path(this.path).
-    attr(this.attributes).
-    attr("stroke-width", 0);
+  this.current_group.push(
+    this.paper.path(this.path).
+      attr(this.attributes).
+      attr("stroke-width", 0)
+      );
   return this;
 }
 
 Vex.Flow.RaphaelContext.prototype.stroke = function() {
-  this.paper.path(this.path).
-    attr(this.attributes).
-    attr("fill", "none").
-    attr("stroke-width", this.lineWidth);
+  this.current_group.push(
+    this.paper.path(this.path).
+      attr(this.attributes).
+      attr("fill", "none").
+      attr("stroke-width", this.lineWidth)
+      );
   return this;
 }
 
@@ -276,6 +297,8 @@ Vex.Flow.RaphaelContext.prototype.measureText = function(text) {
     attr("fill", "none").
     attr("stroke", "none");
 
+  this.current_group.push(txt);
+
   return {
     width: txt.getBBox().width,
     height: txt.getBBox().height
@@ -283,9 +306,11 @@ Vex.Flow.RaphaelContext.prototype.measureText = function(text) {
 }
 
 Vex.Flow.RaphaelContext.prototype.fillText = function(text, x, y) {
-  this.paper.text(x + (this.measureText(text).width / 2),
+  this.current_group.push(
+    this.paper.text(x + (this.measureText(text).width / 2),
       (y - (this.state.font_size / (2.25 * this.state.scale.y))), text).
-    attr(this.attributes);
+      attr(this.attributes)
+      );
   return this;
 }
 
