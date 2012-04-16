@@ -211,3 +211,5 @@ Vex.BM = function(s, f) {
   var elapsed = new Date().getTime() - start_time;
   Vex.L(s + elapsed + "ms");
 }
+
+Vex.StaveNotesMap = {};
