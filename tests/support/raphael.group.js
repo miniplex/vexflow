@@ -1,20 +1,31 @@
 Raphael.fn.group = function() {
-
+	
 	var r = this,
 		cfg = (arguments[0] instanceof Array) ? {} : arguments[0],
 		items = (arguments[0] instanceof Array) ? arguments[0] : arguments[1];
 	
-	function Group(cfg, items) {
-		var set = r.set(items);
-		var	group = r.raphael.vml ? 
+	var	group = r.raphael.vml ? 
 				document.createElement("group") : 
 				document.createElementNS("http://www.w3.org/2000/svg", "g");
-		
+	
+	function Group(cfg, items) {
+		var set = r.set(items);		
 		r.canvas.appendChild(group);
 		this.type = "group";
 		this.node = group;
-		this.group = group;
 		this.set = set;
+		
+		this.paper = r;
+		this.attrs = this.attrs || {};
+		this._ = {
+            transform: [],
+            sx: 1,
+            sy: 1,
+            deg: 0,
+            dx: 0,
+            dy: 0,
+            dirty: 1
+        };
 		
 	}
     
@@ -43,14 +54,14 @@ Raphael.fn.group = function() {
 	}
 
 	Group.prototype.scale =  function (newScale) {
-			var transform = this.group.getAttribute('transform');
-			this.group.setAttribute('transform', updateScale(transform, newScale));
+			var transform = group.getAttribute('transform');
+			group.setAttribute('transform', updateScale(transform, newScale));
 			return this;
 	};
 		
 	Group.prototype.rotate = function(deg) {
-			var transform = this.group.getAttribute('transform');
-			this.group.setAttribute('transform', updateRotation(transform, deg));
+			var transform = group.getAttribute('transform');
+			group.setAttribute('transform', updateRotation(transform, deg));
 	};
 
 	Group.prototype.push = function(item) {
@@ -62,7 +73,7 @@ Raphael.fn.group = function() {
 						pushOneRaphaelVector(it[i]);
 					}
 				} else {
-					that.group.appendChild(it.node);
+					group.appendChild(it.node);
 					that.set.push(it);
 				}
 			}
