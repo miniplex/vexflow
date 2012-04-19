@@ -325,7 +325,7 @@ Vex.Flow.StaveNote.prototype.draw = function() {
     							).reduce(function (x,y) { return x + "-" + y;}
     							);
 	group.node.setAttribute('class', class_str);
-	var uuid = Raphael.createUUID();
+	var uuid = Raphael.createUUID().split("-")[0];
 	group.node.setAttribute('id', uuid);
 	Vex.StaveNotesMap[uuid] = group;
   }
